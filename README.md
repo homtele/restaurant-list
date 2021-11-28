@@ -4,16 +4,16 @@
 ## 安裝與執行步驟 (Installation and Execution)
 1. Clone the repository
 ```
-$ git clone https://github.com/homtele/restaurant-list.git
+git clone https://github.com/homtele/restaurant-list.git
 ```
 2. Install dependencies
 ```
-$ cd restaurant-list
-$ npm install
+cd restaurant-list
+npm install
 ```
 3. Run the project
 ```
-$ npm run start
+npm run start
 ```
 Navigate to http://localhost:3000
 ## 功能描述 (Features)
