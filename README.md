@@ -5,7 +5,7 @@
 ## 安裝與執行步驟 (Installation and Execution)
 1. Clone the repository
 ```
-$ git clone https://github.com/homtele/restaurant-list.git
+git clone https://github.com/homtele/restaurant-list.git
 ```
 2. Install dependencies
 ```
