@@ -47,6 +47,13 @@ app.get('/restaurants/:id', (req, res) => {
     console.error(error)
   })
 })
+app.get('/restaurants/:id/edit', (req, res) => {
+  Restaurant.findById(req.params.id).lean().then(restaurant => {
+    res.render('edit', { restaurant })
+  }).catch(error => {
+    console.error(error)
+  })
+})
 app.post('/restaurants', (req, res) => {
   Restaurant.create({
     name: req.body.name,
@@ -58,6 +65,22 @@ app.post('/restaurants', (req, res) => {
     rating: req.body.rating,
     description: req.body.description
   }).then(() => {
+    res.redirect('/')
+  }).catch(error => {
+    console.error(error)
+  })
+})
+app.post('/restaurants/:id/edit', (req, res) => {
+  Restaurant.findById(req.params.id).then(restaurant => {
+    restaurant.name = req.body.name
+    restaurant.category = req.body.category
+    restaurant.image = req.body.image
+    restaurant.location = req.body.location
+    restaurant.phone = req.body.phone
+    restaurant.google_map = req.body.google_map
+    restaurant.rating = req.body.rating
+    restaurant.description = req.body.description
+    restaurant.save()
     res.redirect('/')
   }).catch(error => {
     console.error(error)
