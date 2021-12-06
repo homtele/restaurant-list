@@ -86,6 +86,14 @@ app.post('/restaurants/:id/edit', (req, res) => {
     console.error(error)
   })
 })
+app.post('/restaurants/:id/delete', (req, res) => {
+  Restaurant.findById(req.params.id).then(restaurant => {
+    restaurant.remove()
+    res.redirect('/')
+  }).catch(error => {
+    console.error(error)
+  })
+})
 
 app.listen(port, () => {
   console.log(`The server is listening on http://localhost:${port}`)
