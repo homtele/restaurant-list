@@ -55,31 +55,25 @@ app.get('/restaurants/:id/edit', (req, res) => {
   })
 })
 app.post('/restaurants', (req, res) => {
-  Restaurant.create({
-    name: req.body.name,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    google_map: req.body.google_map,
-    rating: req.body.rating,
-    description: req.body.description
-  }).then(() => {
+  console.log(req.body)
+  const { name, category, image, location, phone, google_map, rating, description } = req.body
+  Restaurant.create({ name, category, image, location, phone, google_map, rating, description }).then(() => {
     res.redirect('/')
   }).catch(error => {
     console.error(error)
   })
 })
 app.post('/restaurants/:id/edit', (req, res) => {
+  const { name, category, image, location, phone, google_map, rating, description } = req.body
   Restaurant.findById(req.params.id).then(restaurant => {
-    restaurant.name = req.body.name
-    restaurant.category = req.body.category
-    restaurant.image = req.body.image
-    restaurant.location = req.body.location
-    restaurant.phone = req.body.phone
-    restaurant.google_map = req.body.google_map
-    restaurant.rating = req.body.rating
-    restaurant.description = req.body.description
+    restaurant.name = name
+    restaurant.category = category
+    restaurant.image = image
+    restaurant.location = location
+    restaurant.phone = phone
+    restaurant.google_map = google_map
+    restaurant.rating = rating
+    restaurant.description = description
     restaurant.save()
     res.redirect('/')
   }).catch(error => {

@@ -9,16 +9,8 @@ db.on('error', () => {
 db.once('open', () => {
   console.log('MongoDB is connected!')
   restaurantList.results.forEach(restaurant => {
-    Restaurant.create({
-      name: restaurant.name,
-      category: restaurant.category,
-      image: restaurant.image,
-      location: restaurant.location,
-      phone: restaurant.phone,
-      google_map: restaurant.google_map,
-      rating: restaurant.rating,
-      description: restaurant.description
-    })
+    const { name, category, image, location, phone, google_map, rating, description } = restaurant
+    Restaurant.create({ name, category, image, location, phone, google_map, rating, description })
   })
   console.log('Done!')
 })
