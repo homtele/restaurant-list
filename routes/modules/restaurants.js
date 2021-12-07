@@ -23,7 +23,6 @@ router.get('/:id/edit', (req, res) => {
   })
 })
 router.post('/', (req, res) => {
-  console.log(req.body)
   const { name, category, image, location, phone, google_map, rating, description } = req.body
   Restaurant.create({ name, category, image, location, phone, google_map, rating, description }).then(() => {
     res.redirect('/')
@@ -32,7 +31,7 @@ router.post('/', (req, res) => {
   })
 })
 
-router.post('/:id/edit', (req, res) => {
+router.put('/:id', (req, res) => {
   const { name, category, image, location, phone, google_map, rating, description } = req.body
   Restaurant.findById(req.params.id).then(restaurant => {
     restaurant.name = name
@@ -50,7 +49,7 @@ router.post('/:id/edit', (req, res) => {
   })
 })
 
-router.post('/:id/delete', (req, res) => {
+router.delete('/:id', (req, res) => {
   Restaurant.findById(req.params.id).then(restaurant => {
     restaurant.remove()
     res.redirect('/')
