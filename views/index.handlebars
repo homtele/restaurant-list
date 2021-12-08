@@ -11,9 +11,11 @@
           </div>
         </div>
         <div class="col-sm">
-          <select name="sort" class="form-select">
-            <option value="asc_by_name">A > Z</option>
-            <option value="desc_by_name">Z > A</option>
+          <select name="sort" class="form-select" id="sort">
+            <option value="name_asc" {{#if nameAsc}}selected{{/if}}>店名升序</option>
+            <option value="name_desc"{{#if nameDesc}}selected{{/if}}>店名降序</option>
+            <option value="category_asc"{{#if categoryAsc}}selected{{/if}}>類別</option>
+            <option value="rating_desc"{{#if ratingDesc}}selected{{/if}}>評分最高</option>
           </select>
         </div>
       </form>
@@ -22,8 +24,8 @@
 </div>
 
 <!-- restaurant list -->
-{{#if length}}
 <div class="container m-5" id="data-panel">
+  {{#if restaurants.length}}
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {{#each restaurants}}
     <div class="col text-muted">
@@ -50,19 +52,17 @@
     </div>
     {{/each}}
   </div>
-</div>
-{{/if}}
+  {{/if}}
 
-{{#unless length}}
-<div class="container m-5">
+  {{#unless restaurants.length}}
   <div class="row">
     <div class="mx-auto" style="width: 400px;">
       沒有符合關鍵字的餐廳！
       <input class="btn btn-outline-secondary" type ="button" onclick="history.back()" value="回到上一頁">
     </div>
   </div>
-</div>
 {{/unless}}
+</div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
