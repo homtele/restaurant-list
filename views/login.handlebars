@@ -1,0 +1,20 @@
+<h1 class="restaurant-show-title">登入</h1>
+<div class="container">
+  <div class="col-md-4 mx-auto">
+    <div class="card-body">
+      <form action="/users/login" method="post" class="row">
+        <div class="col-12 mb-3">
+          <label for="email" class="form-label visually-hidden">Email</label>
+          <input type="email" name="email" class="form-control" id="email" placeholder="電子郵件地址">
+        </div>
+        <div class="col-12 mb-3">
+          <label for="password" class="form-label visually-hidden">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="密碼">
+        </div>
+        <button type="submit" class="btn btn-primary col-12 mb-3">登入</button>
+        <hr>
+        <p class="lead">還沒有帳號？ <a href="/users/register" class="btn btn-success col-3 m-3">註冊</a></p>
+      </form>
+    </div>
+  </div>
+</div>

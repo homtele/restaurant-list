@@ -6,16 +6,16 @@
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="col-sm">
           <div class="input-group">
-            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button">
+            <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..." value="{{keyword}}" aria-describedBy="search-button">
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
           </div>
         </div>
         <div class="col-sm">
           <select name="sort" class="form-select" id="sort">
-            <option value="name_asc" {{#if nameAsc}}selected{{/if}}>店名升序</option>
-            <option value="name_desc"{{#if nameDesc}}selected{{/if}}>店名降序</option>
-            <option value="category_asc"{{#if categoryAsc}}selected{{/if}}>類別</option>
-            <option value="rating_desc"{{#if ratingDesc}}selected{{/if}}>評分最高</option>
+            <option value="name" {{#if select.nameAsc}}selected{{/if}}>店名升序</option>
+            <option value="-name" {{#if select.nameDesc}}selected{{/if}}>店名降序</option>
+            <option value="category" {{#if select.categoryAsc}}selected{{/if}}>類別</option>
+            <option value="-rating" {{#if select.ratingDesc}}selected{{/if}}>評分最高</option>
           </select>
         </div>
       </form>
@@ -61,7 +61,7 @@
       <input class="btn btn-outline-secondary" type ="button" onclick="history.back()" value="回到上一頁">
     </div>
   </div>
-{{/unless}}
+  {{/unless}}
 </div>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-hidden="true">

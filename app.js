@@ -1,16 +1,29 @@
 const express = require('express')
 const app = express()
+const session = require('express-session')
 const methodOverride = require('method-override')
-const routes = require('./routes')
-require('./config/mongoose')
+const usePassport = require('./config/passport.js')
+const routes = require('./routes/index.js')
+require('./config/mongoose.js')
 
 const exphbs = require('express-handlebars')
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: {
+    selected: (a, b) => a === b ? 'selected' : ''
+  }
+}))
 app.set('view engine', 'handlebars')
 
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: true }))
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'))
+usePassport(app)
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  next()
+})
 app.use(routes)
 
 app.listen(3000, () => {

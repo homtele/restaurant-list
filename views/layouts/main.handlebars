@@ -18,7 +18,16 @@
         <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
         我的餐廳清單
       </a>
-      <a href="/restaurants/new" class="nav-item btn btn-outline-success">新增餐廳</a>
+      <div class="nav-item">
+        <a href="/restaurants/new" class="btn btn-outline-success">新增餐廳</a>
+        {{#if isAuthenticated}}
+        <form action="/users/logout" method="post" class="d-inline">
+          <button type="submit" class="btn btn-outline-danger">登出</button>
+        </form>
+        {{else}}
+        <a href="/users/login" class="btn btn-outline-primary">登入</a>
+        {{/if}}
+      </div>
     </div>
   </nav>
   <div class="banner"></div>
