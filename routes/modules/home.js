@@ -6,13 +6,11 @@ const Restaurant = require('../../models/restaurant')
 router.get('/', (req, res) => {
   Restaurant.find({ userID: req.user._id }).lean().sort({ name: 'asc' }).then(restaurants => {
     return res.render('index', { restaurants })
-  }).catch(error => {
-    console.error(error)
-  })
+  }).catch(error => console.error(error))
 })
 
 router.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim().toLowerCase()
+  const keyword = req.query.keyword.trim()
   const sort = req.query.sort
   const select = {
     nameAsc: sort === 'name',
@@ -27,10 +25,8 @@ router.get('/search', (req, res) => {
       { category: { $regex: keyword, $options: 'i' } }
     ]
   }).lean().sort(sort).then(restaurants => {
-    return res.render('index', { keyword, restaurants, select })
-  }).catch(error => {
-    console.error(error)
-  })
+    return res.render('index', { keyword, select, restaurants })
+  }).catch(error => console.error(error))
 })
 
 module.exports = router

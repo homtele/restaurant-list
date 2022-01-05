@@ -9,32 +9,49 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
-  if (!email || !password || !confirmPassword) {
-    return res.redirect('/users/login')
+  const errors = []
+  if (!email) {
+    errors.push({ message: '請設定電子郵件地址。' })
   }
-  if (password !== confirmPassword) {
-    return res.redirect('/users/login')
+  if (!password) {
+    errors.push({ message: '請設定密碼。' })
+  }
+  if (errors.length) {
+    return res.render('register', { errors, name, email, password, confirmPassword })
   }
   User.findOne({ email }).then(user => {
     if (user) {
-      return res.redirect('/users/login')
+      errors.push({ message: '你輸入的電子郵件已經註冊。' })
     }
-    return User.create({ name, email, password })
-  }).then(() => {
-    return res.redirect('/')
+    if (password && password !== confirmPassword) {
+      errors.push({ message: '你所輸入的密碼不一致。' })
+    }
+    if (errors.length) {
+      return res.render('register', { errors, name, email, password, confirmPassword })
+    }
+    if (password === confirmPassword) {
+      return User.create({ name, email, password }).then(user => {
+        req.flash('success_message', '註冊成功，請登入帳號。')
+        return res.redirect('/users/login')
+      })
+    }
+    return res.render('register', { name, email, password, confirmPassword })
   }).catch(err => console.error(err))
 })
 
 router.get('/login', (req, res) => {
-  res.render('login')
+  const error = req.flash('error')
+  res.render('login', { error })
 })
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/users/login'
+  failureRedirect: '/users/login',
+  failureFlash: true
 }))
 
 router.post('/logout', (req, res) => {
+  req.flash('success_message', '登出成功。')
   req.logout()
   res.redirect('/users/login')
 })
