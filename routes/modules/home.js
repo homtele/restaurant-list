@@ -4,8 +4,8 @@ const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 
 router.get('/', (req, res) => {
-  Restaurant.find().lean().sort({ name: 'asc' }).then(restaurants => {
-    res.render('index', { restaurants, length: restaurants.length })
+  Restaurant.find({ userID: req.user._id }).lean().sort({ name: 'asc' }).then(restaurants => {
+    return res.render('index', { restaurants })
   }).catch(error => {
     console.error(error)
   })
@@ -20,9 +20,14 @@ router.get('/search', (req, res) => {
     categoryAsc: sort === 'category',
     ratingDesc: sort === '-rating'
   }
-  Restaurant.find().lean().sort(sort).then(restaurants => {
-    restaurants = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword))
-    res.render('index', { keyword, restaurants, select })
+  Restaurant.find({
+    userID: req.user._id,
+    $or: [
+      { name: { $regex: keyword, $options: 'i' } },
+      { category: { $regex: keyword, $options: 'i' } }
+    ]
+  }).lean().sort(sort).then(restaurants => {
+    return res.render('index', { keyword, restaurants, select })
   }).catch(error => {
     console.error(error)
   })

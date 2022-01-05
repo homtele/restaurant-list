@@ -24,7 +24,7 @@
 </div>
 
 <!-- restaurant list -->
-<div class="container m-5" id="data-panel">
+<div class="container my-5" id="data-panel">
   {{#if restaurants.length}}
   <div class="row row-cols-1 row-cols-md-3 g-4">
     {{#each restaurants}}
@@ -55,9 +55,9 @@
   {{/if}}
 
   {{#unless restaurants.length}}
-  <div class="row">
-    <div class="mx-auto" style="width: 400px;">
-      沒有符合關鍵字的餐廳！
+  <div class="container my-5">
+    <div class="text-center">
+      沒有符合的餐廳！
       <input class="btn btn-outline-secondary" type ="button" onclick="history.back()" value="回到上一頁">
     </div>
   </div>
