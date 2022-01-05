@@ -1,5 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
+const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 
 module.exports = app => {
@@ -10,7 +11,7 @@ module.exports = app => {
       if (!user) {
         return done(null, false, { message: '你輸入的電子郵件地址並未與帳號連結。' })
       }
-      if (password !== user.password) {
+      if (!bcrypt.compare(password, user.password)) {
         return done(null, false, { message: '你所輸入的密碼錯誤。' })
       }
       return done(null, user)
