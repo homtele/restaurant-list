@@ -1,12 +1,18 @@
-document.querySelector('#sort').addEventListener('change', event => {
+const sort = document.querySelector('#sort')
+const searchForm = document.querySelector('#search-form')
+const dataPanel = document.querySelector('#data-panel')
+const modalBody = document.querySelector('#modal-body')
+const confirm = document.querySelector('#confirm')
+
+sort.addEventListener('change', event => {
   if (event.target.matches('select')) {
-    event.target.parentElement.parentElement.submit()
+    searchForm.submit()
   }
 })
 
-document.querySelector('#data-panel').addEventListener('click', event => {
+dataPanel.addEventListener('click', event => {
   if (event.target.matches('.delete-btn')) {
-    document.querySelector('#modal-body').textContent = `確定要刪除『${event.target.dataset.name}』嗎？`
-    document.querySelector('#confirm').action = `/restaurants/${event.target.dataset.id}?_method=delete`
+    modalBody.textContent = `確定要刪除『${event.target.dataset.name}』嗎？`
+    confirm.action = `/restaurants/${event.target.dataset.id}?_method=delete`
   }
 })

@@ -1,48 +1,39 @@
 const bcrypt = require('bcryptjs')
-const Restaurant = require('../restaurant.js')
-const User = require('../user.js')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv')
+}
 const db = require('../../config/mongoose.js')
 
+const User = require('../user.js')
+const Restaurant = require('../restaurant.js')
+
+const userList = require('./user.json').results
 const restaurantList = require('./restaurant.json').results
 
-db.once('open', async () => {
-  try {
-    await bcrypt.genSalt(10).then(salt => {
-      return bcrypt.hash('12345678', salt)
-    }).then(hash => {
-      return User.create({ email: 'user1@example.com', password: hash })
-    }).then(user => {
-      const userID = user._id
-      return Promise.all(restaurantList.slice(0, 3).map(restaurant => {
-        const { name, category, image, location, phone, google_map: googleMap, rating, description } = restaurant
-        return Restaurant.create({ userID, name, category, image, location, phone, googleMap, rating, description })
-      }))
+db.once('open', () => {
+  Promise.all(
+    // Outer array: generating user
+    userList.map(userItem => {
+      return bcrypt.genSalt(10).then(salt => {
+        return bcrypt.hash(userItem.password, salt)
+      }).then(hash => {
+        return User.create({ email: userItem.email, password: hash })
+      }).then(user => {
+        return Promise.all(
+          // Inner array: generating restaurant
+          restaurantList.filter(restaurantItem => {
+            return userItem.restaurantMap.includes(restaurantItem.id)
+          }).map(restaurantItem => {
+            const { name, category, image, location, phone, google_map: googleMap, rating, description } = restaurantItem
+            return Restaurant.create({ userID: user._id, name, category, image, location, phone, googleMap, rating, description })
+          })
+          // End of inner array
+        )
+      })
     })
-    await bcrypt.genSalt(10).then(salt => {
-      return bcrypt.hash('12345678', salt)
-    }).then(hash => {
-      return User.create({ email: 'user2@example.com', password: hash })
-    }).then(user => {
-      const userID = user._id
-      return Promise.all(restaurantList.slice(3, 6).map(restaurant => {
-        const { name, category, image, location, phone, google_map: googleMap, rating, description } = restaurant
-        return Restaurant.create({ userID, name, category, image, location, phone, googleMap, rating, description })
-      }))
-    })
-    await bcrypt.genSalt(10).then(salt => {
-      return bcrypt.hash('1', salt)
-    }).then(hash => {
-      return User.create({ email: '1@1', password: hash })
-    }).then(user => {
-      const userID = user._id
-      return Promise.all(restaurantList.map(restaurant => {
-        const { name, category, image, location, phone, google_map: googleMap, rating, description } = restaurant
-        return Restaurant.create({ userID, name, category, image, location, phone, googleMap, rating, description })
-      }))
-    })
+    // End of Outer array
+  ).then(() => {
     console.log('Done!')
     process.exit()
-  } catch (err) {
-    console.error(err)
-  }
+  })
 })

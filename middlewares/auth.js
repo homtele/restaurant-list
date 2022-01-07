@@ -1,9 +1,10 @@
 module.exports = {
   authenticator: (req, res, next) => {
     if (req.isAuthenticated()) {
-      return next()
+      next()
+      return
     }
     req.flash('warning_message', '請登入以使用這個網站。')
-    return res.redirect('/users/login')
+    res.redirect('/users/login')
   }
 }
