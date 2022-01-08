@@ -3,14 +3,15 @@
   <div class="col-md-4 mx-auto">
     <div class="card-body">
       {{>message}}
-      <form action="/users/login" method="post" class="row">
+      <form action="/users/login" method="post" class="row" id="login-form" novalidate>
         <div class="col-12 mb-3">
           <label for="email" class="form-label visually-hidden">Email</label>
-          <input type="email" name="email" class="form-control" id="email" placeholder="電子郵件地址">
+          <input type="email" name="email" class="form-control" id="email" placeholder="電子郵件地址" required>
+          <div class="invalid-feedback"></div>
         </div>
         <div class="col-12 mb-3">
           <label for="password" class="form-label visually-hidden">Password</label>
-          <input type="password" name="password" class="form-control" id="password" placeholder="密碼">
+          <input type="password" name="password" class="form-control" id="password" placeholder="密碼" required>
         </div>
         <button type="submit" class="btn btn-info col-12 mb-3">登入</button>
         <a href="/auth/facebook" class="btn btn-primary col-12 mb-3">以 Facebook 帳號登入</a>
@@ -20,3 +21,4 @@
     </div>
   </div>
 </div>
+<script src="/javascripts/login.js"></script>

@@ -1,80 +1,80 @@
 <h1 class="restaurant-show-title">新增餐廳</h1>
 <div class="container">
   <div class="col-10 mx-auto">
-    <form action="/restaurants" method="post" class="row justify-content-end">
-      <div class="col-12 row mb-3">
-        <label class="col-2 col-form-label text-muted" for="name">
-          <i class="fas fa-store pr-2"></i>
-          *店名：
-        </label>
-        <div class="col-10">
-          <input type="text" name="name" class="form-control" id="name" required>
+    <form action="/restaurants/{{restaurant._id}}" method="post" class="row justify-content-end" id="data-form" novalidate>
+      <div class="row mb-3">
+        <div class="col-4">
+          <label class="form-label text-muted" for="name">
+            <i class="fas fa-store pr-2"></i>
+            店名：
+          </label>
+          <input type="text" name="name" class="form-control col-10" id="name" required>
+        </div>
+        <div class="col-4">
+          <label class="form-label text-muted" for="category">
+            <i class="fas fa-utensils pr-2"></i>
+            類別：
+          </label>
+          <input type="text" name="category" class="form-control col-10" id="category" required>
+        </div>
+        <div class="col-4">
+          <label class="form-label text-muted" for="rating">
+            <i class="fas fa-star pr-2 fa-xs"></i>
+            評分：
+          </label>
+          <input type="number" name="rating" class="form-control col-10" id="rating" min="0" max="5" step="0.1" required>
+          <div class="invalid-feedback"></div>
         </div>
       </div>
-      <div class="col-12 row mb-3">
-        <label class="col-2 col-form-label text-muted" for="category">
-          <i class="fas fa-utensils pr-2"></i>
-          *類別：
-        </label>
-        <div class="col-10">
-          <input type="text" name="category" class="form-control" id="category" required>
-        </div>
-      </div>
-      <div class="col-12 row mb-3">
+      <div class="row mb-3">
         <label class="col-2 col-form-label text-muted" for="image">
           <i class="fas fa-images pr-2"></i>
-          *照片：
+          照片：
         </label>
         <div class="col-10">
-          <input type="url" name="image" class="form-control" id="image" required>
+          <input type="url" name="image" class="form-control col-10" id="image" required>
+          <div class="invalid-feedback"></div>
         </div>
       </div>
-      <div class="col-12 row mb-3">
+      <div class="row mb-3">
         <label class="col-2 col-form-label text-muted" for="location">
           <i class="fas fa-map-marker-alt pr-2"></i>
           地址：
         </label>
         <div class="col-10">
-          <input type="text" name="location" class="form-control" id="location">
+          <input type="text" name="location" class="form-control col-10" id="location" required>
         </div>
       </div>
-      <div class="col-12 row mb-3">
+      <div class="row mb-3">
         <label class="col-2 col-form-label text-muted" for="phone">
           <i class="fas fa-mobile-alt pr-2"></i>
           電話：
         </label>
         <div class="col-10">
-          <input type="text" name="phone" class="form-control" id="phone">
+          <input type="text" name="phone" class="form-control col-10" id="phone" required>
         </div>
       </div>
-      <div class="col-12 row mb-3">
-        <label class="col-2 col-form-label text-muted" for="google_map">
+      <div class="row mb-3">
+        <label class="col-2 col-form-label text-muted" for="google-map">
           <i class="fas fa-location-arrow pr-2 fa-xs"></i>
           地圖：
         </label>
         <div class="col-10">
-          <input type="url" name="googleMap" class="form-control" id="google_map">
+          <input type="url" name="googleMap" class="form-control col-10" id="google-map" required>
+          <div class="invalid-feedback"></div>
         </div>
       </div>
-      <div class="col-12 row mb-3">
-        <label class="col-2 col-form-label text-muted" for="rating">
-          <i class="fas fa-star pr-2 fa-xs"></i>
-          *評分：
-        </label>
-        <div class="col-10">
-          <input type="number" name="rating" class="form-control" id="rating" min="0" max="5" step="0.1" required>
-        </div>
-      </div>
-      <div class="col-12 row mb-3">
+      <div class="row mb-3">
         <label class="col-2 col-form-label text-muted" for="description">
           <i class="fas fa-comment pr-2"></i>
           簡介：
         </label>
         <div class="col-10">
-          <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+          <textarea name="description" class="form-control col-10 scrollbar" id="description" rows="3"></textarea required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary col-3 m-3">新增</button>
+      <button type="submit" class="btn btn-primary col-3 m-3">提交</button>
     </form>
   </div>
 </div>
+<script src="/javascripts/edit.js"></script>
