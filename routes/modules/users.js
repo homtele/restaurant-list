@@ -38,7 +38,7 @@ router.post('/register', (req, res) => {
       }).then(() => {
         req.flash('success_message', '註冊成功，請登入帳號。')
         return res.redirect('/users/login')
-      })
+      }).catch(err => console.error(err))
     }
     return res.render('register', { name, email, password, confirmPassword })
   }).catch(err => console.error(err))

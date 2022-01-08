@@ -26,20 +26,26 @@ module.exports = app => {
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
     profileFields: ['displayName', 'email']
   }, (accessToken, refreshToken, profile, done) => {
-    bcrypt.genSalt(10).then(salt => {
-      return bcrypt.hash(Math.random().toString(36).slice(-8), salt)
-    }).then(hash => {
-      const { name, email } = profile._json
-      return User.create({ name, email, password: hash })
-    }).then(user => {
-      done(null, user)
+    const { name, email } = profile._json
+    User.findOne({ email }).then(user => {
+      if (user) {
+        done(null, user)
+        return
+      }
+      return bcrypt.genSalt(10).then(salt => {
+        return bcrypt.hash(Math.random().toString(36).slice(-8), salt)
+      }).then(hash => {
+        return User.create({ name, email, password: hash })
+      }).then(user => {
+        done(null, user)
+      }).catch(err => done(err))
     }).catch(err => done(err))
   }))
   passport.serializeUser((user, done) => {
     done(null, user._id)
   })
   passport.deserializeUser((id, done) => {
-    User.findById(id).then(user => {
+    User.findById(id).lean().then(user => {
       done(null, user)
     }).catch(err => done(err))
   })
