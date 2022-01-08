@@ -14,16 +14,17 @@
     cd restaurant-list
     npm install
     ```
-3.  Seed the data
+3.  Rename .env.example to .env in the root directory and set FACEBOOK_APP_ID, FACEBOOK_APP_SECRET
+4.  Seed the data
     ```
     npm run seed
-    ```
-4.  Run the project
+    ```    
+5.  Run the project
     ```
     npm start
     ```
     Navigate to http://localhost:3000
-5.  Register a new account or login the following accounts
+6.  Register a new account or login the following accounts
     *   email: user1@example.com, password: 12345678
     *   email: user2@example.com, password: 12345678
 ##  功能描述 (Features)
